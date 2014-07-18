@@ -1,14 +1,25 @@
 #!/bin/bash
 # Script to start/stop a server on AWS using an autoscaling group
 # This reserved ASG tags new instances with asg=test
-# Specify Elastic IP in env variable "EIP" and Autoscaling Group name in variable below
+# Specify Elastic IP and ASG name in environment variables: AWS_SERVER_EIP, AWS_SERVER_ASG
 
-ASG=VPC_PROD_01_ASG_TEST
+ASG=$AWS_SERVER_ASG
+EIP=$AWS_SERVER_EIP
+
 EIP_ASSOC=$(aws ec2 describe-addresses --public-ips $EIP | jq -r '.Addresses[0].AssociationId')
 CMD_INSTANCE_ID="aws ec2 describe-instances --filter Name=tag:asg,Values=test Name=instance-state-name,Values=running | jq  -r '.Reservations[0].Instances[0].InstanceId'"
 INSTANCE_ID=`eval $CMD_INSTANCE_ID`
 
-if [ $1 ] && [ $1 = "start" ]
+if [ $1 ] && [ $1 = "status" ]
+then
+    if [ "$INSTANCE_ID" != "null" ]
+    then
+        echo "instance is up: $INSTANCE_ID"
+    else
+        echo "instance is not running"
+    fi
+    exit
+elif [ $1 ] && [ $1 = "start" ]
 then
     if [ "$INSTANCE_ID" != "null" ]
     then
@@ -48,7 +59,8 @@ then
     echo "done."
     exit
 else
-    echo "Usage: $0 start|stop"
+    echo "Usage: $0 start|stop|status"
+    echo "Specify Elastic IP and ASG name in environment variables: AWS_SERVER_EIP, AWS_SERVER_ASG"
     exit
 fi
 
