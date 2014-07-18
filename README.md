@@ -1,7 +1,7 @@
 aws-scripts
 ===========
 
-awsserver start|stop|status|ssh [username]
+Usage: awsserver start|stop|status|ssh [username]
 
 - `awsserver start` starts the server
 - `awsserver stop` stops the server
