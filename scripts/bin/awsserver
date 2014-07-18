@@ -10,7 +10,11 @@ EIP_ASSOC=$(aws ec2 describe-addresses --public-ips $EIP | jq -r '.Addresses[0].
 CMD_INSTANCE_ID="aws ec2 describe-instances --filter Name=tag:asg,Values=test Name=instance-state-name,Values=running | jq  -r '.Reservations[0].Instances[0].InstanceId'"
 INSTANCE_ID=`eval $CMD_INSTANCE_ID`
 
-if [ $1 ] && [ $1 = "status" ]
+if [ $1 ] && [ $2 ] && [ $1 = "ssh" ]
+then
+    ssh $2@$EIP
+    exit
+elif [ $1 ] && [ $1 = "status" ]
 then
     if [ "$INSTANCE_ID" != "null" ]
     then
@@ -59,7 +63,7 @@ then
     echo "done."
     exit
 else
-    echo "Usage: $0 start|stop|status"
+    echo "Usage: $0 start|stop|status|ssh [username]"
     echo "Specify Elastic IP and ASG name in environment variables: AWS_SERVER_EIP, AWS_SERVER_ASG"
     exit
 fi
