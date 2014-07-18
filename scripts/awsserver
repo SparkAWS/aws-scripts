@@ -4,7 +4,7 @@
 # Specify Elastic IP in env variable "EIP" and Autoscaling Group name in variable below
 
 ASG=VPC_PROD_01_ASG_TEST
-EIP_ASSOC=$(aws  ec2 describe-addresses --public-ips $EIP | jq -r '.Addresses[0].AssociationId')
+EIP_ASSOC=$(aws ec2 describe-addresses --public-ips $EIP | jq -r '.Addresses[0].AssociationId')
 CMD_INSTANCE_ID="aws ec2 describe-instances --filter Name=tag:asg,Values=test Name=instance-state-name,Values=running | jq  -r '.Reservations[0].Instances[0].InstanceId'"
 INSTANCE_ID=`eval $CMD_INSTANCE_ID`
 
