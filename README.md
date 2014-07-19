@@ -15,13 +15,15 @@ Operate an instance in your AWS VPC with pre-defined launch configuration and at
 To ssh to the instance use "awsserver ssh" - this assumes that you have already set up your keys.
 
 
-Dependencies
+Prerequisites
 ====
 Assuming you already set up your AWS account, you will also need the following:
-- jq
 - AWS command-line client
-- Autoscaling group setup
-- Elastic IP
+- jq
+
+You also need to make sure you have dedicated:
+- One Autoscaling group setup
+- One Elastic IP
 
 Configuration
 ====
