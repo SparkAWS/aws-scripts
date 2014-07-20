@@ -1,6 +1,8 @@
 aws-scripts
 ===========
 
+This is a script you can use to learn AWS command-line utility. If you want to build tool and have more control in other programming languages, you probably want to use the language specific API. For example, check out: https://github.com/SparkAWS
+
 Usage
 =====
 Usage: awsserver start|stop|status|ssh [username]
