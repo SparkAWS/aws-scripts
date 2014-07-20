@@ -54,7 +54,6 @@ then
     while [ $count -le 18 ] && [ "$INSTANCE_ID" != "null" ]
     do
         echo -ne "."
-        echo "$INSTANCE_ID"
         sleep 10
         (( count++ ))
         INSTANCE_ID=`eval $CMD_INSTANCE_ID`
